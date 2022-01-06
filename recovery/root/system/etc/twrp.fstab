@@ -10,17 +10,9 @@
 
 # Core Partitions
 /metadata             ext4    /dev/block/platform/bootdevice/by-name/md_udc         flags=backup=1;display="metadata";mounttodecrypt
-#/md_udc		    emmc	/dev/block/platform/bootdevice/by-name/md_udc            flags=backup=1;display="md_udc"
-#/metadata	    emmc	/dev/block/platform/bootdevice/by-name/metadata          flags=backup=1;display="metadata";mounttodecrypt
 
 # Common partition
-#/data_c		    ext4	/dev/block/platform/bootdevice/by-name/userdata         flags=dm_use_original_path;encryptable=/dev/block/platform/bootdevice/by-name/metadata
-#/data_b		    ext4	/dev/block/platform/bootdevice/by-name/userdata         flags=fileencryption=aes-256-xts;backup=1
 /data            ext4    /dev/block/platform/bootdevice/by-name/userdata            flags=fileencryption=aes-256-xts:aes-256-cts:v2,keydirectory=/metadata/vold/metadata_encryption
-#/data_d            ext4    /dev/block/platform/bootdevice/by-name/userdata            flags=metadata_encryption=aes-256-xts:wrappedkey
-#/data_e            ext4    /dev/block/platform/bootdevice/by-name/userdata            flags=encryptable=/dev/block/platform/bootdevice/by-name/metadata/vold/metadata_encryption
-#/data_a          ext4    /dev/block/bootdevice/by-name/userdata                    flags=fileencryption=aes-256-xts:aes-256-cts;encryptable=/metadata/vold/metadata_encryption/key
-/data_a            ext4    /dev/block/platform/bootdevice/by-name/userdata_a            flags=fileencryption=aes-256-xts:aes-256-cts:v2,keydirectory=/metadata/vold/metadata_encryption
 /vendor_boot	emmc	/dev/block/bootdevice/by-name/vendor_boot_a		 flags=slotselect;display="Vendor Boot_a";backup=1;flashimg=1;slotselect
 /boot_a            emmc    /dev/block/platform/bootdevice/by-name/boot_a               flags=backup=1;display="Boot_a";flashimg=1;slotselect
 /dtbo            emmc    /dev/block/platform/bootdevice/by-name/dtbo               flags=backup=1;display="Dtbo";flashimg=1;slotselect
@@ -46,8 +38,8 @@
 /nvram		    emmc	/dev/block/platform/bootdevice/by-name/nvram            flags=display="NvRam";backup=1;flashimg=1
 
 # Subscriber Identification Module (SIM)
-/protect_f	    ext4	/dev/block/platform/bootdevice/by-name/protect1         flags=display="Protect";backup=1;mounttodecrypt
-/protect_s	    ext4	/dev/block/platform/bootdevice/by-name/protect2         flags=backup=1;subpartitionof=/protect_f
+/protect_f	    ext4	/dev/block/platform/bootdevice/by-name/protect_a         flags=display="Protect";backup=1;mounttodecrypt
+/protect_s	    ext4	/dev/block/platform/bootdevice/by-name/protect_b         flags=backup=1;subpartitionof=/protect_f
 
 # Trusted Execution Environment (TEE) - trustzone
 /tee_a		    emmc	/dev/block/platform/bootdevice/by-name/tee_a             flags=display="Tee_a";backup=1;flashimg=1
