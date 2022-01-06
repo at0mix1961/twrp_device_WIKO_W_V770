@@ -61,8 +61,8 @@ jobs:
          run: |
               PATH=~/bin:$PATH
               cd twrp
-              export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh &&lunch twrp_$DEVICE-eng && mka $TARGET -j4
-              cp  out/target/product/$DEVICE/boot.img    out/target/product/$DEVICE/boot-$DEVICE-main-$(date +"%Y%m%d-%H%M").img  
+              export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh &&lunch twrp_Power_5-eng && mka $TARGET -j4
+              cp  out/target/product/Power_5/boot.img    out/target/product/Power_5/boot-Power_5-main-$(date +"%Y%m%d-%H%M").img  
              
        - name: Release recovery image
          uses: softprops/action-gh-release@v1
@@ -72,4 +72,4 @@ jobs:
           tag_name: TWRP_11-main
           name: main
           files: | 
-            twrp/out/target/product/$DEVICE/boot*.img
+            twrp/out/target/product/Power_5/boot*.img
