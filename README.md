@@ -13,6 +13,7 @@ Bluetooth| 5.0 - Positioning: GPS, A-GPS, GLONASS, BeiDou, Galileo
 SIM card| Nano-SIM - Wi-Fi: a, b, g, n, n 5GHz, ac, Dual band, Wi-Fi Hotspot, Wi-Fi Direct, Wi-Fi Display
 
 ## Status --> ALPHA
+Read about here: https://github.com/lopestom/twrp_device_umidigi_Power_5/wiki
 
 Current state of features (from [here](https://twrp.me/faq/OfficialMaintainer.html)):
 
