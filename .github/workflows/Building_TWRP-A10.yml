@@ -55,14 +55,13 @@ jobs:
        - name: Checkout device tree
          uses: actions/checkout@v2
          with:
-          path: device/TECNO/KE7
-#          path: twrp/device/TECNO/KE7
+          path: twrp/device/TECNO/KE7
              
        - name: Build
          run: |
               PATH=~/bin:$PATH
               cd twrp
-              export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh &&lunch omni_KE7-eng && mka $TARGET -j4
+              export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh &&lunch omni_KE7-eng && mka $TARGET -j3
               cp  out/target/product/KE7/recovery.img    out/target/product/KE7/recovery-KE7-main-$(date +"%Y%m%d-%H%M").img  
              
        - name: Release recovery image
