@@ -55,7 +55,8 @@ jobs:
        - name: Checkout device tree
          uses: actions/checkout@v2
          with:
-          path: twrp/device/TECNO/KE7
+          path: device/TECNO/KE7
+#          path: twrp/device/TECNO/KE7
              
        - name: Build
          run: |
