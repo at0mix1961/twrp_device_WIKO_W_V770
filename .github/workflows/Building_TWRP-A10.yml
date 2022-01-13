@@ -1,75 +1,110 @@
-name: Building recovery 10
+name: Make Recovery3
 
 on:
-#  release:
-#    types: [published]
-#  push:
-#    branches:
-#      - master
-#    paths:
-#      - '.config'
-#  schedule:
-#    - cron: 0 8 * * 5
   workflow_dispatch:
-
-env:
-  MANIFEST: git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp-10.0-deprecated
-  DEVICE: KE7
-  DT_LINK: https://github.com/depesh1977/android_device_TECNO_KE
-  DT_PATH: device/TECNO/KE7
-  TARGET: recoveryimage
-  TZ: Asia/manila
+    inputs:
+      LIBRARY_URL:
+        description: 'LIBRARY_URL'
+        required: true
+        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
+      LIBRARY_BRANCH:
+        description: 'LIBRARY_BRANCH'
+        required: true
+        default: 'twrp-10.0-deprecated'
+      LIBRARY_TYPE:
+        description: 'LIBRARY_TYPE'
+        required: false
+        default: 'omni_'
+      DEVICE_URL:
+        description: 'DEVICE_URL'
+        required: true
+        default: 'https://github.com/depesh1977/android_device_TECNO_KE.git'
+      DEVICE_BRANCH:
+        description: 'DEVICE_BRANCH'
+        required: true
+        default: 'android-10.0'
+      DEVICE_PATH:
+        description: 'DEVICE_PATH'
+        required: true
+        default: 'device/TECNO/KE7'
+      DEVICE_NAME:
+        description: 'DEVICE_NAME'
+        required: true
+        default: 'KE7'
 
 jobs:
   build:
+    if: github.event.repository.owner.id == github.event.sender.id
     runs-on: ubuntu-18.04
-
+    
     steps:
-       - name: Checkout
-         uses: actions/checkout@master
-         
+    - name: Check Out
+      uses: actions/checkout@main
+      
+    - name: Prepare the environment
+      run: |
+        docker rmi `docker images -q`
+        sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/sudo apt/sources.list.d
+        sudo apt -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+        sudo apt -y autoremove --purge
+        sudo apt -y autoclean
+        sudo apt clean
+        sudo apt update
+        sudo apt -y install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip jq bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libwxgtk3.0-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev imagemagick libbz2-dev libssl-dev lzma ncftp bash-completion python openjdk-8-jdk qemu-user-static
+      
+    - name: Set variables
+      run: |
+        echo "::set-output name=date::$(date +%F)"
+      id: var
+      
+    - name: Install repo
+      run: |
+        mkdir ~/bin
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        chmod a+x ~/bin/repo
+        export PATH=~/bin:$PATH
+      
+    - name: Initialize repo
+      run: |
+        PATH=~/bin:$PATH
+        mkdir workspace
+        cd workspace
+        echo "::set-output name=pwd::$(pwd)"
+        git config --global user.name "lopestom"
+        git config --global user.email "lopestom1@gmail.com"
+        repo init --depth=1 -u ${{ github.event.inputs.LIBRARY_URL }} -b ${{ github.event.inputs.LIBRARY_BRANCH }}
+      id: pwd
+          
+    - name: Repo Sync
+      run: |
+        PATH=~/bin:$PATH
+        cd workspace
+        repo sync -j$(nproc --all)
+      
+    - name: Clone device
+      run: |
+        PATH=~/bin:$PATH
+        cd ${{ steps.pwd.outputs.pwd }}
+        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
 
-       - name: Initializing environment
-         run: |
-            sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
-            docker rmi `docker images -q`
-            sudo apt-get remove account-plugin-facebook account-plugin-flickr account-plugin-jabber account-plugin-salut account-plugin-twitter account-plugin-windows-live account-plugin-yahoo aisleriot brltty duplicity empathy empathy-common example-content gnome-accessibility-themes gnome-contacts gnome-mahjongg gnome-mines gnome-orca gnome-screensaver gnome-sudoku gnome-video-effects gnomine landscape-common libreoffice-avmedia-backend-gstreamer libreoffice-base-core libreoffice-calc libreoffice-common libreoffice-core libreoffice-draw libreoffice-gnome libreoffice-gtk libreoffice-impress libreoffice-math libreoffice-ogltrans libreoffice-pdfimport libreoffice-style-galaxy libreoffice-style-human libreoffice-writer libsane libsane-common mcp-account-manager-uoa python3-uno rhythmbox rhythmbox-plugins rhythmbox-plugin-zeitgeist sane-utils shotwell shotwell-common telepathy-gabble telepathy-haze telepathy-idle telepathy-indicator telepathy-logger telepathy-mission-control-5 telepathy-salut totem totem-common totem-plugins printer-driver-brlaser printer-driver-foo2zjs printer-driver-foo2zjs-common printer-driver-m2300w printer-driver-ptouch printer-driver-splix
-            git config --global user.name "lopestom"
-            git config --global user.email "lopestom1@gmail.com"         
-            sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php* 
-            sudo -E apt-get clean
-            sudo -E apt-get -qq update
-            sudo -E apt-get -qq install bc build-essential zip curl libstdc++6 git wget python gcc clang libssl-dev repo rsync flex curl  bison aria2
-            sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
-            sudo chmod a+rx /usr/local/bin/repo
-            
-       - name: Sync recovery source and device tree
-         run: |
-          PATH=~/bin:$PATH
-          mkdir twrp
-          cd twrp
-          repo init -u $MANIFEST --depth=1
-          repo sync -c -j8 --force-sync --no-clone-bundle --no-tags
-          rm -rf .repo
-             
-       - name: Checkout device tree
-         uses: actions/checkout@v2
-         with:
-          path: twrp/device/TECNO/KE7
-             
-       - name: Build
-         run: |
-              PATH=~/bin:$PATH
-              cd twrp
-              export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh &&lunch omni_KE7-eng && mka $TARGET -j3
-              cp  out/target/product/KE7/recovery.img    out/target/product/KE7/recovery-KE7-main-$(date +"%Y%m%d-%H%M").img  
-             
-       - name: Release recovery image
-         uses: softprops/action-gh-release@v1
-         env:
-          GITHUB_TOKEN: ${{ secrets.TEST }}
-         with:
-          tag_name: TWRP_11-main
-          name: main
-          files: | 
-            twrp/out/target/product/KE7/recovery*.img
+    - name: Building
+      run: |
+        PATH=~/bin:$PATH
+        cd ${{ steps.pwd.outputs.pwd }}
+        export ALLOW_MISSING_DEPENDENCIES=true
+        source build/envsetup.sh
+        lunch ${{ github.event.inputs.LIBRARY_TYPE }}${{ github.event.inputs.DEVICE_NAME }}-eng
+        make clean
+        make recoveryimage -j$(nproc --all)
+
+    - name: Upload to Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
+        name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+        body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.TEST }}
