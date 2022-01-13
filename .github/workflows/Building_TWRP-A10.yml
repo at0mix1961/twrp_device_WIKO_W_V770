@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 env:
-  MANIFEST: git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-10.0-deprecated
+  MANIFEST: git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp-10.0-deprecated
   DEVICE: KE7
   DT_LINK: https://github.com/depesh1977/android_device_TECNO_KE
   DT_PATH: device/TECNO/KE7
