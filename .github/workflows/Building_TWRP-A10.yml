@@ -1,8 +1,12 @@
-name: Make Recovery3
+name: Make Recovery2
 
 on:
   workflow_dispatch:
     inputs:
+      LIBRARY_NAME:
+        description: 'LIBRARY_NAME'
+        required: true
+        default: 'omni'
       LIBRARY_URL:
         description: 'LIBRARY_URL'
         required: true
@@ -11,10 +15,6 @@ on:
         description: 'LIBRARY_BRANCH'
         required: true
         default: 'twrp-10.0-deprecated'
-      LIBRARY_TYPE:
-        description: 'LIBRARY_TYPE'
-        required: false
-        default: 'omni_'
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
@@ -31,6 +31,11 @@ on:
         description: 'DEVICE_NAME'
         required: true
         default: 'KE7'
+      DEVICE_PARTITION:
+        description: 'DEVICE_PARTITION'
+        required: true
+        default: 'recovery'
+
 
 jobs:
   build:
@@ -93,18 +98,18 @@ jobs:
         cd ${{ steps.pwd.outputs.pwd }}
         export ALLOW_MISSING_DEPENDENCIES=true
         source build/envsetup.sh
-        lunch ${{ github.event.inputs.LIBRARY_TYPE }}${{ github.event.inputs.DEVICE_NAME }}-eng
+        lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
         make clean
-        make recoveryimage -j$(nproc --all)
+        make ${{ github.event.inputs.DEVICE_PARTITION }}image -j$(nproc --all)
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
         files: |
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery.img
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.DEVICE_PARTITION }}.img
         name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
         tag_name: ${{ github.run_id }}
-        body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}
+        body: Recovery for ${{ github.event.inputs.DEVICE_NAME }}-${{ github.event.inputs.LIBRARY_BRANCH }}
       env:
         GITHUB_TOKEN: ${{ secrets.TEST }}
