@@ -167,13 +167,13 @@ jobs:
     - name: Zip Files
       run: |
         cd randomfiles/twrp_atemplate
-        zip -rv twrp-v3.7.0_11.1-v000-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip recovery.img META-INF/
+        zip -rv twrp-v3.7.0_11-v000-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip recovery.img META-INF/
 
     - name: Renaming into TWRP
       run: |
         cd out/target/product/${{ github.event.inputs.DEVICE_NAME }}
         mv ${{ github.event.inputs.BUILD_TARGET }}.img twrp-v3.7.0_11.1-v000-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.img
-        echo "Done renaming into twrp-v3.7.0_11.1-v000-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.img"
+        echo "Done renaming into twrp-v3.7.0_11-v000-${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.img"
       working-directory: ${{ steps.pwd.outputs.workdir }}
       
     - name: Upload to Release
@@ -188,10 +188,10 @@ jobs:
         tag: ${{ github.run_id }}-${{ steps.props.outputs.date }}
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
-          ## TWRP v3.7.0_11.1-Power_5-${{ steps.props.outputs.date }}
-          - To be edited
-          - To be edited.
-          - To be edited. 
+          ## TWRP v3.7.0_11-Power_5-${{ steps.props.outputs.date }}
+          Manifest: ${{ github.event.inputs.MANIFEST_BRANCH }}
+          Device: ${{ github.event.inputs.DEVICE_NAME }}
+          Target: ${{ github.event.inputs.BUILD_TARGET }}.img
 
     - name: Link of Release
       run: |
