@@ -1,4 +1,4 @@
-LOCAL_PATH := device/umidigi/Power_5
+LOCAL_PATH := device/WIKO/W_V770
 
 # Dynamic Partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
