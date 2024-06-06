@@ -1,21 +1,15 @@
-# TWRP device trees for Umidigi Power 5 - 3GB RAM - 64GB ROM
-# MTK Helio G25 - mt6762_mt6765
-## Specs => https://www.devicespecifications.com/en/model/ed6356a0
+# TWRP device trees for WIKO T3 (W-V770) - 4GB RAM - 128GB ROM
+# MTK Helio P35 - mt6765
+## Specs => https://ru.wikomobile.com/m3410-wiko-t3
 Component Type | Details
 -------:|:-------------------------
-Dimensions| 76.9 x 164.8 x 9.9 mm - Weight: 211 g - Display: 6.53 in, IPS, 720 x 1600 pixels, 24 bit
-OS| Android 11 - Soc: MediaTek Helio G25 - Platform: mt6765, Hardware: mt6762
-RAM| 3 GB, 4 GB, 1866 MHz -CPU: ARM Cortex-A53, 2000 MHz - Cores: 8 - GPU: IMG PowerVR GE8320, 650 MHz
-Storage| 64 GB, 128 GB - USB: 2.0, USB Type-C - Memory cards: microSD, microSDHC, microSDXC
-Battery| 6150 mAh, Li-Polymer
-Camera| 4608 x 3456 pixels, 1920 x 1080 pixels, 30 fps
+Display: 6.6 in, IPS, 720 x 1600 pixels, 24 bit
+OS| Android 11 - Soc: MediaTek Helio P35 - Platform: mt6765
+RAM| 4 GB, 
+Storage| 128 GB - USB: 2.0, USB Type-C - Memory cards: microSD, microSDHC, microSDXC
+Battery| 5000 mAh, Li-Polymer
 Bluetooth| 5.0 - Positioning: GPS, A-GPS, GLONASS, BeiDou, Galileo
-SIM card| Nano-SIM - Wi-Fi: a, b, g, n, n 5GHz, ac, Dual band, Wi-Fi Hotspot, Wi-Fi Direct, Wi-Fi Display
-
-## Status --> ALPHA
-Read about here: https://github.com/lopestom/twrp_device_umidigi_Power_5/wiki
-
-Current state of features (from [here](https://twrp.me/faq/OfficialMaintainer.html)):
+SIM card| Nano-SIM - Wi-Fi: a, b, g, n, ac, Wi-Fi Hotspot, Wi-Fi Direct, Wi-Fi Display
 
 ### Blocking checks
 
