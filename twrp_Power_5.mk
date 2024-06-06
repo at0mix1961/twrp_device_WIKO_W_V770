@@ -25,24 +25,24 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
 # Inherit from star device
-$(call inherit-product, device/umidigi/Power_5/device.mk)
+$(call inherit-product, device/WIKO/W_V770/device.mk)
 
 # Inherit some common recovery stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := Power_5
-PRODUCT_NAME := twrp_Power_5
-PRODUCT_BRAND := UMIDIGI
-PRODUCT_MODEL := Power 5
+PRODUCT_DEVICE := W_V770
+PRODUCT_NAME := twrp_W_V770
+PRODUCT_BRAND := WIKO
+PRODUCT_MODEL := W-V770
 PRODUCT_MANUFACTURER := HXY
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    TARGET_DEVICE=Power_5 \
-    PRODUCT_NAME=Power_5 \
-    PRIVATE_BUILD_DESC="full_g2139dpr_v1_gf_ym_power5_r-user 11 RP1A.200720.011 2106051522 release-keys"
+    TARGET_DEVICE=W_V770 \
+    PRODUCT_NAME=W_V770 \
+    PRIVATE_BUILD_DESC="full_W_V770-user 11 release-keys"
 
-BUILD_FINGERPRINT := UMIDIGI/Power_5/Power_5:11/RP1A.200720.011/2106051522:user/release-keys
+BUILD_FINGERPRINT := WIKO/W_V770/W_V770_5:11/RP1A.200720.011/2106051522:user/release-keys
 
 # HACK: Set vendor patch level
 PRODUCT_PROPERTY_OVERRIDES += \
