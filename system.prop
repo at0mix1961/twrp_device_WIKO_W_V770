@@ -16,7 +16,7 @@ ro.product.brand=WIKO
 ro.product.name=W_V770
 ro.product.device=W_V770
 ro.sys.xunhu_bt=W-V770
-# ro.product.xunhu.device=g2139dpr_v1_gf_ym_power5_r
+ro.product.xunhu.device=V770
 net.hostname=W-V770
 #
 ro.crypto.volume.metadata.encryption=aes-256-xts:aes-256-cts
