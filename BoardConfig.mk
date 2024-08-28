@@ -160,10 +160,11 @@ TW_EXCLUDE_APEX := false
 TW_INCLUDE_RESETPROP := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_INCLUDE_NTFS_3G := true
-TW_DEFAULT_LANGUAGE := en
+TW_DEFAULT_LANGUAGE := ru-RU
+### языки
 TW_EXTRA_LANGUAGES := false
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
-TW_DEVICE_VERSION := UMIDIGI_POWER 5_V1.0_20210702 by lopestom
+TW_DEVICE_VERSION := WIKO T3
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2047
 TW_DEFAULT_BRIGHTNESS := 1200
@@ -174,7 +175,9 @@ TW_EXCLUDE_TWRPAPP := true
 TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
 #TW_SCREEN_BLANK_ON_BOOT := true
 TW_NO_SCREEN_BLANK := true
-TW_HAS_MTP := true
+#TW_HAS_MTP := true
+# Remove MTP support
+TW_EXCLUDE_MTP := true
 
 PLATFORM_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 20.1.0
@@ -190,3 +193,14 @@ TW_CRYPTO_FS_TYPE := "ext4"
 TW_CRYPTO_REAL_BLKDEV := "/dev/block/platform/bootdevice/by-name/userdata"
 TW_CRYPTO_MNT_POINT := "/data"
 TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,discard,noauto_da_alloc,data=ordered"
+
+### добавлено 28.08.24 ###
+# Removes USB Storage capability
+TW_NO_USB_STORAGE := true
+# Remove TrueType fonts
+TW_DISABLE_TTF:= true
+# ToyBox (disables busybox?)
+TW_USE_TOOLBOX := true
+TW_EXCLUDE_TZDATA := true
+TW_EXCLUDE_NANO := true
+TW_EXCLUDE_BASH := true
