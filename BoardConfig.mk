@@ -164,7 +164,7 @@ TW_DEFAULT_LANGUAGE := ru-RU
 ### языки
 TW_EXTRA_LANGUAGES := false
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
-TW_DEVICE_VERSION := WIKO T3
+TW_DEVICE_VERSION := WIKO T3 by at0mix
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 TW_MAX_BRIGHTNESS := 2047
 TW_DEFAULT_BRIGHTNESS := 1200
@@ -201,6 +201,6 @@ TW_NO_USB_STORAGE := true
 TW_DISABLE_TTF:= true
 # ToyBox (disables busybox?)
 TW_USE_TOOLBOX := true
-TW_EXCLUDE_TZDATA := true
+#TW_EXCLUDE_TZDATA := true
 TW_EXCLUDE_NANO := true
 TW_EXCLUDE_BASH := true
